@@ -1,0 +1,35 @@
+
+.card{
+	padding: 3em;
+}
+h1{
+	color: #3F729B;
+}
+
+.wmd-panel{
+	margin-left: 0px  !important;
+  margin-right: 0px !important;
+}
+
+h2 {
+	color: red !important;
+}
+.mus h2{
+		color: red !important;
+
+}
+
+.comment-reply{
+	display:none;
+}
+
+.view {
+    background: url("https://mdbootstrap.com/img/Photos/Others/img (50).jpg")no-repeat center center;
+    background-size: cover;
+}
+html,
+body,
+header,
+.view {
+  height: 100%;
+}
