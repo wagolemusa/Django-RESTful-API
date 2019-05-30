@@ -3,7 +3,9 @@ from django.urls import path
 from django.conf.urls import  url
 from .views import (
 	PostDetailAPIVeiw,
-	PostListAPIVeiw
+	PostListAPIVeiw,
+	PostUpdateAPIVeiw,
+	PostDeleteAPIVeiw
 	# post_list,
 	# post_create,
 	# post_detail,
@@ -17,6 +19,6 @@ urlpatterns = [
   path('',  PostListAPIVeiw.as_view(), name='list'),
   # path('create/', post_create),
   path('<slug:slug>/',PostDetailAPIVeiw.as_view(), name='detail'),
-  # path('<slug:slug>/edit/', post_update, name='update'),
-  # path('<slug:slug>/delete/', post_delete),
+  path('<slug:slug>/edit/', PostUpdateAPIVeiw.as_view(), name='update'),
+  path('<slug:slug>/delete/', PostDeleteAPIVeiw.as_view(), name='delete'),
 ]
