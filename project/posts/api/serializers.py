@@ -4,6 +4,9 @@ from posts.models import Post
 
 
 class PostCreateUpdateSerializer(ModelSerializer):
+	"""
+	Create Contents
+	"""
 	class Meta:
 		model = Post
 		fields = [
@@ -13,6 +16,9 @@ class PostCreateUpdateSerializer(ModelSerializer):
 		]
 
 class PostListSerializer(ModelSerializer):
+	"""
+	Retrivew all the Content
+	"""
 	class Meta:
 		model = Post
 		fields = [
@@ -23,6 +29,9 @@ class PostListSerializer(ModelSerializer):
 		]
 
 class PostDetailSerializer(ModelSerializer):
+	"""
+	Retrieve a specific Content by ID
+	"""
 	class Meta:
 		model = Post
 		fields = [
