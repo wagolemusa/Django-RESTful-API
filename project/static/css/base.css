@@ -23,13 +23,3 @@ h2 {
 	display:none;
 }
 
-.view {
-    background: url("https://mdbootstrap.com/img/Photos/Others/img (50).jpg")no-repeat center center;
-    background-size: cover;
-}
-html,
-body,
-header,
-.view {
-  height: 100%;
-}
