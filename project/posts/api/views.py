@@ -7,6 +7,16 @@ from rest_framework.generics import (
 	RetrieveUpdateAPIView
 	)
 
+# To import user Permissions in Django apis
+from rest_framework.permissions import(
+	AllowAny,
+	IsAuthenticated,
+	IsAdminUser,
+	IsAuthenticatedOrReadOnly,
+	)
+
+from .permissions import IsOwnerOrReadOnly
+
 from posts.models import Post
 from .serializers import (
 	PostDetailSerializer,
@@ -21,7 +31,9 @@ class PostCreateAPIVeiw(CreateAPIView):
 	"""
 	queryset = Post.objects.all()
 	serializer_class = PostCreateUpdateSerializer
+	permissions_classes = [IsAuthenticated]
 
+	# It changes to the user who create content to new user.
 	def perform_create(self, serializer):
 		serializer.save(user=self.request.user)
 
@@ -42,7 +54,9 @@ class PostUpdateAPIVeiw(RetrieveUpdateAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostCreateUpdateSerializer
 	lookup_field = 'slug'
+	permissions_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
+	# create user Permissions
 	def perform_update(self, serializer):
 		serializer.save(user=self.request.user)
 
