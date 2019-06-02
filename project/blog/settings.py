@@ -45,6 +45,13 @@ INSTALLED_APPS = [
     'accounts',
     'posts',
 ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     )
+# }
+
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 MIDDLEWARE = [  
     'django.middleware.security.SecurityMiddleware',
