@@ -1,3 +1,11 @@
+from django.db.models import Q
+
+# This in bult functions for search
+from rest_framework.filters import (
+	SearchFilter,
+	OrderingFilter,
+	)
+
 from rest_framework.generics import (
 	DestroyAPIView,
 	ListAPIView,
@@ -74,7 +82,22 @@ class PostListAPIVeiw(ListAPIView):
 	"""
 	Retrivew all the Content
 	"""
-	queryset = Post.objects.all()
 	serializer_class = PostListSerializer
 
+	# You pass things to search
+	filter_backends = [SearchFilter, OrderingFilter]
+	search_fields = ['title', 'content', 'user_first_name']
+
+
+	def get_queryset(self, *args, **kwargs):
+		# querset_list = super(PostListAPIVeiw, self).get_queryset(*args, **kwargs)
+		querySet_list = Post.objects.all()
+		query = self.request.GET.get("q")
+		if query:
+			querySet_list = querySet_list.filter(
+								Q(title__icontains=query)|
+								Q(content__icontains=query)|
+								Q(user__username__icontains=query)
+								).distinct()
+		return querySet_list
 
