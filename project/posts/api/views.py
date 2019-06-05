@@ -5,6 +5,8 @@ from rest_framework.filters import (
 	SearchFilter,
 	OrderingFilter,
 	)
+# importing paginations
+from .pagination import PostLimitOffsetPagination
 
 from rest_framework.generics import (
 	DestroyAPIView,
@@ -87,6 +89,8 @@ class PostListAPIVeiw(ListAPIView):
 	# You pass things to search
 	filter_backends = [SearchFilter, OrderingFilter]
 	search_fields = ['title', 'content', 'user_first_name']
+	# Pagination
+	pagination_class = PostLimitOffsetPagination
 
 
 	def get_queryset(self, *args, **kwargs):
