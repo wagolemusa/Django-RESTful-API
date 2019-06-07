@@ -61,7 +61,7 @@ def comment_thread(request, id):
 	form = CommentForm(request.POST or None, initial=initial_data)
 	print(dir(form))
 	print(form.errors)
-	if form.is_valid() and request.user.is_authenticated():
+	if form.is_valid() and request.user.is_authenticate():
 		c_type       =   form.cleaned_data.get("content_type")
 		content_type =   ContentType.objects.get(model=c_type)
 		obj_id       =   form.cleaned_data.get('object_id')
