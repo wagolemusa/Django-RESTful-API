@@ -29,7 +29,8 @@ from rest_framework.permissions import(
 from comments.models import Comment
 
 from .serializers import (
-	CommentSerializer
+	CommentSerializer,
+	CommentDetailSerializer
 	)
 
 
@@ -52,8 +53,8 @@ class CommentDetailAPIVeiw(RetrieveAPIView):
 	Retrieve a specific Content by ID
 	"""
 	queryset = Comment.objects.all()
-	serializer_class = CommentSerializer
-	# lookup_field = 'slug'
+	serializer_class = CommentDetailSerializer
+	lookup_field = 'pk'
 
 # class PostUpdateAPIVeiw(RetrieveUpdateAPIView):
 # 	"""
