@@ -49,8 +49,6 @@ class PostDetailSerializer(ModelSerializer):
 	def get_user(self, obj):
 		return str(obj.user.username)
 
-
-
 class PostListSerializer(ModelSerializer):
 	"""
 	Retrivew all the Content
