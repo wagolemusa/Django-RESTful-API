@@ -30,21 +30,33 @@ from comments.models import Comment
 
 from .serializers import (
 	CommentSerializer,
-	CommentDetailSerializer
+	CommentDetailSerializer,
+	create_comment_serializer,
 	)
 
 
-# class PostCreateAPIVeiw(CreateAPIView):
-# 	"""
-# 	Create Content
-# 	"""
-# 	queryset = Post.objects.all()
-# 	serializer_class = PostCreateUpdateSerializer
-# 	permissions_classes = [IsAuthenticated]
+class CommentCreateAPIVeiw(CreateAPIView):
+	"""
+	Create Content
+	"""
+	queryset = Comment.objects.all()
+	# serializer_class = PostCreateUpdateSerializer
+	permissions_classes = [IsAuthenticated]
 
-# 	# It changes to the user who create content to new user.
-# 	def perform_create(self, serializer):
-# 		serializer.save(user=self.request.user)
+	def get_serializer_class(self):
+		model_type = self.request.GET.get("type")
+		slug = self.request.GET.get("slug")
+		parent_id = self.request.GET.get("parent_id", None)
+		return create_comment_serializer(
+			model_type='post',
+			slug=None,
+			parent_id=None,
+			user=self.request.user
+			)
+
+	# It changes to the user who create content to new user.
+	# def perform_create(self, serializer):
+		# serializer.save(user=self.request.user)
 
 
 
