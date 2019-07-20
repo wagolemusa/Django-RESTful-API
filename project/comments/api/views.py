@@ -9,6 +9,7 @@ from rest_framework.filters import (
 from posts.api.permissions import IsOwnerOrReadOnly
 from posts.api.pagination import PostLimitOffsetPagination
 
+from rest_framework.mixins import DestroyModelMixin, UpdateModelMixin
 from rest_framework.generics import (
 	DestroyAPIView,
 	ListAPIView,
@@ -31,6 +32,7 @@ from comments.models import Comment
 from .serializers import (
 	CommentSerializer,
 	CommentDetailSerializer,
+	CommentEditSerializer, 
 	create_comment_serializer,
 	)
 
@@ -67,6 +69,18 @@ class CommentDetailAPIVeiw(RetrieveAPIView):
 	queryset = Comment.objects.all()
 	serializer_class = CommentDetailSerializer
 	lookup_field = 'pk'
+
+class CommentEditAPIView(DestroyModelMixin, UpdateModelMixin, RetrieveAPIView):
+	queryset = Comment.objects.filter(id__gte=0)
+	serializer_class = CommentEditSerializer
+
+	def put(self, request, *args, **kwargs):
+		return self.update(request, *args, **kwargs)
+
+
+	def delete(self, request, *args, **kwargs):
+		return self.destroy(request, * args,  **kwargs)
+
 
 # class PostUpdateAPIVeiw(RetrieveUpdateAPIView):
 # 	"""
