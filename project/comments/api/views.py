@@ -30,7 +30,7 @@ from rest_framework.permissions import(
 from comments.models import Comment
 
 from .serializers import (
-	CommentSerializer,
+	CommentListSerializer,
 	CommentDetailSerializer,
 	# CommentEditSerializer, 
 	create_comment_serializer,
@@ -111,7 +111,7 @@ class CommentListAPIVeiw(ListAPIView):
 	"""
 	Retrivew all the Content
 	"""
-	serializer_class = CommentSerializer
+	serializer_class = CommentListSerializer
 
 	# You pass things to search
 	filter_backends = [SearchFilter, OrderingFilter]
@@ -122,7 +122,7 @@ class CommentListAPIVeiw(ListAPIView):
 
 	def get_queryset(self, *args, **kwargs):
 		# querset_list = super(PostListAPIVeiw, self).get_queryset(*args, **kwargs)
-		querySet_list = Comment.objects.all()
+		querySet_list = Comment.objects.filter(id__gte=0)
 		query = self.request.GET.get("q")
 		if query:
 			querySet_list = querySet_list.filter(
