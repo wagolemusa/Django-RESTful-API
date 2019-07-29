@@ -4,10 +4,13 @@ from rest_framework.serializers import (
 	SerializerMethodField
 	)
 
+from accounts.api.serializers import UserDetailSerializer
+
 # imports from comments in api
 from comments.api.serializers import CommentSerializer
 from comments.models import Comment
 from posts.models import Post 
+
 
 class PostCreateUpdateSerializer(ModelSerializer):
 	"""
@@ -27,34 +30,30 @@ post_detail_url = HyperlinkedIdentityField(
 )
 
 
-class PostDetailSerializer(ModelSerializer):
+class PostListSerializer(ModelSerializer):
 	"""
 	Retrieve a specific Content by ID
 	"""
 	url = post_detail_url
-	user = SerializerMethodField()
-	image = SerializerMethodField()
+	user = UserDetailSerializer(read_only=True)
 	class Meta:
 		model = Post
 		fields = [
 			'url',
-			'id',
 			'user',
 			'title',
-			'slug',
 			'content',
 			'publish',
-			'image',
 		]
 	def get_user(self, obj):
 		return str(obj.user.username)
 
-class PostListSerializer(ModelSerializer):
+class PostDetailSerializer(ModelSerializer):
 	"""
 	Retrivew all the Content
 	"""
 	url = post_detail_url
-	user = SerializerMethodField()
+	user = UserDetailSerializer(read_only=True)
 	image = SerializerMethodField()
 	html =  SerializerMethodField()
 	read  = SerializerMethodField()
