@@ -41,7 +41,7 @@ class PostCreateAPIVeiw(CreateAPIView):
 	"""
 	queryset = Post.objects.all()
 	serializer_class = PostCreateUpdateSerializer
-	permissions_classes = [IsAuthenticated]
+	# permissions_classes = [IsAuthenticated]
 
 	# It changes to the user who create content to new user.
 	def perform_create(self, serializer):
@@ -56,6 +56,7 @@ class PostDetailAPIVeiw(RetrieveAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostDetailSerializer
 	lookup_field = 'slug'
+	permissions_classes = [AllowAny]
 
 class PostUpdateAPIVeiw(RetrieveUpdateAPIView):
 	"""
@@ -64,7 +65,7 @@ class PostUpdateAPIVeiw(RetrieveUpdateAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostCreateUpdateSerializer
 	lookup_field = 'slug'
-	permissions_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+	permissions_classes = [IsOwnerOrReadOnly]
 
 	# create user Permissions
 	def perform_update(self, serializer):
@@ -78,6 +79,7 @@ class PostDeleteAPIVeiw(DestroyAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostDetailSerializer
 	lookup_field = 'slug'
+	permissions_classes = [IsOwnerOrReadOnly]
 
 
 class PostListAPIVeiw(ListAPIView):
@@ -85,6 +87,7 @@ class PostListAPIVeiw(ListAPIView):
 	Retrivew all the Content
 	"""
 	serializer_class = PostListSerializer
+	permissions_classes = [AllowAny]
 
 	# You pass things to search
 	filter_backends = [SearchFilter, OrderingFilter]
