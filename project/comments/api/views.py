@@ -43,7 +43,7 @@ class CommentCreateAPIVeiw(CreateAPIView):
 	"""
 	queryset = Comment.objects.all()
 	# serializer_class = PostCreateUpdateSerializer
-	permissions_classes = [IsAuthenticated]
+	# permissions_classes = [IsAuthenticated]
 
 	def get_serializer_class(self):
 		model_type = self.request.GET.get("type")
@@ -73,7 +73,7 @@ class CommentCreateAPIVeiw(CreateAPIView):
 class CommentDetailAPIVeiw(DestroyModelMixin, UpdateModelMixin, RetrieveAPIView):
 	queryset = Comment.objects.filter(id__gte=0)
 	serializer_class = CommentDetailSerializer
-	permissions_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+	permissions_classes = [IsOwnerOrReadOnly]
 
 
 	def put(self, request, *args, **kwargs):
@@ -112,7 +112,7 @@ class CommentListAPIVeiw(ListAPIView):
 	Retrivew all the Content
 	"""
 	serializer_class = CommentListSerializer
-
+	permissions_classes = [AllowAny]
 	# You pass things to search
 	filter_backends = [SearchFilter, OrderingFilter]
 	search_fields = ['content', 'user_first_name']
